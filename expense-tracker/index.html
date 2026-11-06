@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Expense Tracker</title>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>My Expenditure</h1>
+    <p>Store your expenses here!</p>
+  </header>
+
+  <main class="container">
+    <section class="left-col">
+      <div class="card">
+        <h2>Add / Edit Expense</h2>
+        <form id="expense-form">
+          <input type="hidden" id="expense-id" />
+          <label>
+            Amount (₹)
+            <input id="amount" type="number" min="0" step="0.01" required />
+          </label>
+
+          <label>
+            Category
+            <select id="category" required>
+              <option value="Roushan">Roushan</option>
+              <option value="Food">Food</option>
+              <option value="Flipcart">Flipcart</option>
+              <option value="Amazon">Amazon</option>
+              <option value="Room Rent">Room rent</option>
+              <option value="Mess">Mess</option>
+              <option value="Electricity Bill">Electricity Bill</option>
+              <option value="Jio Mart">Jio Mart</option>
+              <option value="Stationary">Stationary</option>
+              <option value="Recharge">Recharge</option>
+              <option value="Aayush">Aayush</option>
+              <option value="Raj Nayan">Raj Nayan</option>
+              <option value="Rajdeep">Rajdeep</option>
+              <option value="Medicine">Medicine</option>
+               <option value="Other">Other</option>
+               
+              
+            </select>
+          </label>
+
+          <label>
+            Date
+            <input id="date" type="date" required />
+          </label>
+
+          <label>
+            Description
+            <input id="description" type="text" maxlength="120" placeholder="Optional note" />
+          </label>
+
+          <div class="form-row">
+            <button type="submit" class="btn">Save Expense</button>
+            <button type="button" id="clear-form" class="btn btn-secondary">Clear</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card quick-actions">
+        <h3>Quick Actions</h3>
+        <div class="actions-row">
+          <button id="add-sample" class="btn">Add Sample Data</button>
+          <button id="export-csv" class="btn">Export CSV</button>
+          <button id="export-json" class="btn">Export JSON</button>
+          <button id="create-bill" class="btn">Create Bill (Filtered)</button>
+          <input id="import-json-file" type="file" accept=".json" style="display:none"/>
+          <button id="import-json" class="btn btn-secondary">Import JSON</button>
+          <button id="clear-all" class="btn danger">Clear All</button>
+        </div>
+      </div>
+
+      <div class="card filters">
+        <h3>Filters</h3>
+        <div class="form-row">
+          <label>From <input id="from-date" type="date" /></label>
+          <label>To <input id="to-date" type="date" /></label>
+        </div>
+        <div class="form-row">
+          <label>
+            Category
+            <select id="filter-category">
+              <option value="All">All</option>
+              <option>Roushan</option>
+              <option>Food</option>
+              <option>Flipcart</option>
+              <option>Amazon</option>
+              <option>Room Rent</option>
+              <option>Mess</option>
+              <option>Electricity Bill</option>
+              <option>Jio Mart</option>
+              <option>Stationary</option>
+              <option>Recharge</option>
+              <option>Aayush</option>
+              <option>Raj Nayan</option>
+              <option>Rajdeep</option>
+              <option>Medicine</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <button id="apply-filters" class="btn">Apply</button>
+          <button id="reset-filters" class="btn btn-secondary">Reset</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="right-col">
+      <div class="card summary">
+        <h2>Summary</h2>
+        <div class="summary-grid">
+          <div>
+            <h4>Total Spent</h4>
+            <p id="total-spent">₹0</p>
+          </div>
+          <div>
+            <h4>Expenses</h4>
+            <p id="count-expenses">0</p>
+          </div>
+          <div>
+            <h4>Range</h4>
+            <p id="range-dates">—</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card chart-card">
+        <h2>Category Breakdown</h2>
+        <canvas id="categoryChart" height="200"></canvas>
+      </div>
+
+      <div class="card table-card">
+        <h2>Expense List</h2>
+        <table id="expenses-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Amount (₹)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <small>Built locally • Data saved in browser (localStorage).</small>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
